@@ -2,7 +2,6 @@
 
 # -=- Simple Dropbox Uploader -=-
 # Created because my lecturer force me to use Dropbox for some reason
-# TODO: Find out if you can do "Share link" using API
 
 # Load config
 #
@@ -14,22 +13,52 @@
 CONF_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/zi_dropbox"
 [ -e $CONF_FILE ] && source "$CONF_FILE" || exit 1
 
+# Error stuff
+err()
+{
+	echo "Usage: dropbox [OPTION...] FILE
+
+Options:
+  -n		change upload name
+  -s		share file" && exit 1;
+}
+
+# Get flags (options)
+while getopts "hn:s" opt; do
+    case "${opt}" in
+	h) err ;;
+        n) DB_FILENAME="${OPTARG}";;
+	s) SHARE=1 ;;
+        *) ;;
+    esac
+done
+
+shift $((OPTIND - 1))
+
 # Get file from argument
-[ -z "$1" ] && echo "Usage: dropbox [filename]" && exit 1
-LOCAL="$1" 
+[ -z "$1" ] && err
+LOCAL="$1"
 [ ! -e $LOCAL ] && echo "File called $LOCAL not Found!" && exit 1
 FILENAME="$(basename $LOCAL)"
-# Name of the file that will be upload to Dropbox (can be set with an argument)
-[ -n "$2" ] && DB_FILENAME=$2 || DB_FILENAME="$(date "+%Y-%m-%d")-$FILENAME"
 
-LOG_DIR="${XDG_DATA_HOME:-$HOME/local/share}/zi_dropbox" 
-[ ! -d $LOG_DIR ] && mkdir $LOG_DIR
+# Log
+# LOG_DIR="${XDG_DATA_HOME:-$HOME/local/share}/zi_dropbox" 
+# [ ! -d $LOG_DIR ] && mkdir $LOG_DIR
 
 # Upload to dropbox using cURL
 # DISCLAIMER: Dropbox token is required!
-(curl -X POST https://content.dropboxapi.com/2/files/upload \
+RESULT=$(curl -X POST https://content.dropboxapi.com/2/files/upload \
     --silent \
     --header "Authorization: Bearer $TOKEN" \
-    --header "Dropbox-API-Arg: {\"path\": \"/$DIRECTORY/$DB_FILENAME\",\"mode\": \"add\",\"autorename\": true,\"mute\": false,\"strict_conflict\": false}" \
+    --header "Dropbox-API-Arg: {\"path\": \"/$DIRECTORY/${DB_FILENAME:-$(date "+%Y-%m-%d")-$FILENAME}\",\"mode\": \"add\",\"autorename\": true,\"mute\": false,\"strict_conflict\": false}" \
     --header "Content-Type: application/octet-stream" \
-    --data-binary @$LOCAL >> $LOG_DIR/output.txt) && echo "Succesfully uploaded $FILENAME" || echo "An error occurred!"
+    --data-binary @$LOCAL)
+[ "$(echo $RESULT | jq .error)" == "null" ] && echo "Succesfully uploaded $FILENAME" || (echo "An error occurred!" && exit 1)
+
+# Share file then print the url
+[ ${SHARE:-0} -lt 1 ] && exit 0
+curl -X POST https://api.dropboxapi.com/2/sharing/create_shared_link_with_settings \
+	--silent \
+	--header "Authorization: Bearer $TOKEN" \
+	--header "Content-Type: application/json" \
+	--data "{\"path\": $(echo $RESULT | jq .path_display),\"settings\": {\"requested_visibility\": \"public\",\"audience\": \"public\",\"access\": \"viewer\"}}" | jq -M .url
