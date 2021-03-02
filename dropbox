@@ -19,6 +19,9 @@ FILENAME="$(basename $LOCAL)"
 # Name of the file that will be upload to Dropbox (can be set with an argument)
 [ -n "$2" ] && DB_FILENAME=$2 || DB_FILENAME="$(date "+%Y-%m-%d")-$FILENAME"
 
+LOG_DIR="${XDG_DATA_HOME:-$HOME/local/share}/zi_dropbox" 
+[ ! -d $LOG_DIR ] && mkdir $LOG_DIR
+
 # Upload to dropbox using cURL
 # DISCLAIMER: Dropbox token is required!
 (curl -X POST https://content.dropboxapi.com/2/files/upload \
@@ -26,4 +29,4 @@ FILENAME="$(basename $LOCAL)"
     --header "Authorization: Bearer $TOKEN" \
     --header "Dropbox-API-Arg: {\"path\": \"/$DIRECTORY/$DB_FILENAME\",\"mode\": \"add\",\"autorename\": true,\"mute\": false,\"strict_conflict\": false}" \
     --header "Content-Type: application/octet-stream" \
-    --data-binary @$LOCAL > output.txt) && echo "Succesfully uploaded $FILENAME" || echo "An error occurred!"
+    --data-binary @$LOCAL >> $LOG_DIR/output.txt) && echo "Succesfully uploaded $FILENAME" || echo "An error occurred!"
