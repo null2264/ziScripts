@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# -=- Simple Dropbox Uploader -=-
+# Created because my lecturer force me to use Dropbox for some reason
+# TODO: Find out if you can do "Share link" using API
+
 # Load config
 #
 # --- Example Config File (/home/user/.config/zi_dropbox) ---
@@ -7,7 +11,6 @@
 # TOKEN="INSERT YOUR DROPBOX TOKEN HERE"
 # DIRECTORY="dropboxApp"
 # # DIRECTORY -> "/Dropbox/Apps/<dropbox_app_name>/$DIRECTORY/"
-
 CONF_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/zi_dropbox"
 [ -e $CONF_FILE ] && source "$CONF_FILE" || exit 1
 
