@@ -2,6 +2,7 @@
 
 # -=- Simple Dropbox Uploader -=-
 # Created because my lecturer force me to use Dropbox for some reason
+# Requirements: jq
 
 # Load config
 #
