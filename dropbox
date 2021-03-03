@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # -=- Simple Dropbox Uploader -=-
 # Created because my lecturer force me to use Dropbox for some reason
