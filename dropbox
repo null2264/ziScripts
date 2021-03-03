@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # -=- Simple Dropbox Uploader -=-
 # Created because my lecturer force me to use Dropbox for some reason
@@ -12,7 +12,7 @@
 # DIRECTORY="dropboxApp"
 # # DIRECTORY -> "/Dropbox/Apps/<dropbox_app_name>/$DIRECTORY/"
 CONF_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/zi_dropbox"
-[ -e $CONF_FILE ] && source "$CONF_FILE" || exit 1
+[ -e $CONF_FILE ] && . "$CONF_FILE" || exit 1
 
 # Error stuff (and instruction on how to use this script)
 err()
@@ -55,7 +55,7 @@ RESULT=$(curl -X POST https://content.dropboxapi.com/2/files/upload \
     --header "Dropbox-API-Arg: {\"path\": \"/$DIRECTORY/${DB_FILENAME:-$(date "+%Y-%m-%d")-$FILENAME}\",\"mode\": \"add\",\"autorename\": true,\"mute\": false,\"strict_conflict\": false}" \
     --header "Content-Type: application/octet-stream" \
     --data-binary @$LOCAL)
-[ "$(echo $RESULT | jq .error)" == "null" ] && echo "Succesfully uploaded $FILENAME" || (echo "An error occurred!" && exit 1)
+[ "$(echo $RESULT | jq .error)" = "null" ] && echo "Succesfully uploaded $FILENAME" || (echo "An error occurred!" && exit 1)
 
 # Share file then print the url
 [ ${SHARE:-0} -lt 1 ] && exit 0
