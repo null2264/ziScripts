@@ -13,12 +13,13 @@
 CONF_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/zi_dropbox"
 [ -e $CONF_FILE ] && source "$CONF_FILE" || exit 1
 
-# Error stuff
+# Error stuff (and instruction on how to use this script)
 err()
 {
-	echo "Usage: dropbox [OPTION...] FILE
+	echo "Usage: dropbox [OPTION...] [FILE]
 
 Options:
+  -h		show this message
   -n		change upload name
   -s		share file" && exit 1;
 }
