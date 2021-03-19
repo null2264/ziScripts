@@ -71,13 +71,13 @@ Options:
 
 # Get flags (options)
 while getopts "t:hn:" opt; do
-    case "${opt}" in
-	h) err ;;
-        n) MODE="create" \
-	   TEMPLATE_NAME=${OPTARG};;
-	t) TEMPLATE_NAME=${OPTARG};;
-        *) ;;
-    esac
+	case "${opt}" in
+		h) err ;;
+		n) MODE="create" \
+		   TEMPLATE_NAME=${OPTARG};;
+		t) TEMPLATE_NAME=${OPTARG};;
+		*) ;;
+	esac
 done
 
 shift $((OPTIND - 1))
