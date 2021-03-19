@@ -38,10 +38,10 @@ done
 shift $((OPTIND - 1))
 
 # Get file from argument
-[ -z "$1" ] && err
-LOCAL="$1"
-[ ! -e $LOCAL ] && echo "File called $LOCAL not Found!" && exit 1
-FILENAME="$(basename $LOCAL)"
+[ -z "$@" ] && err
+LOCAL="$@"
+[ ! -e "$LOCAL" ] && echo "File called $LOCAL not Found!" && exit 1
+FILENAME="$(basename "$LOCAL")"
 
 # Log
 # LOG_DIR="${XDG_DATA_HOME:-$HOME/local/share}/zi_dropbox" 
@@ -54,8 +54,8 @@ RESULT=$(curl -X POST https://content.dropboxapi.com/2/files/upload \
     --header "Authorization: Bearer $TOKEN" \
     --header "Dropbox-API-Arg: {\"path\": \"/$DIRECTORY/${DB_FILENAME:-$(date "+%Y-%m-%d")-$FILENAME}\",\"mode\": \"add\",\"autorename\": true,\"mute\": false,\"strict_conflict\": false}" \
     --header "Content-Type: application/octet-stream" \
-    --data-binary @$LOCAL)
-[ "$(echo $RESULT | jq .error)" = "null" ] && echo "Succesfully uploaded $FILENAME" || (echo "An error occurred!" && exit 1)
+    --data-binary @"$LOCAL")
+[ "$(echo $RESULT | jq .error)" = "null" ] && echo "Succesfully uploaded $FILENAME" || echo "An error occurred!" && exit 1
 
 # Share file then print the url
 [ ${SHARE:-0} -lt 1 ] && exit 0
