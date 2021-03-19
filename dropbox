@@ -63,4 +63,4 @@ curl -X POST https://api.dropboxapi.com/2/sharing/create_shared_link_with_settin
 	--silent \
 	--header "Authorization: Bearer $TOKEN" \
 	--header "Content-Type: application/json" \
-	--data "{\"path\": $(echo $RESULT | jq .path_display),\"settings\": {\"requested_visibility\": \"public\",\"audience\": \"public\",\"access\": \"viewer\"}}" | jq -M .url
+	--data "{\"path\": $(echo $RESULT | jq .path_display),\"settings\": {\"requested_visibility\": \"public\",\"audience\": \"public\",\"access\": \"viewer\"}}" | printf "Shared link: %s\n" $(jq -Mr .url)

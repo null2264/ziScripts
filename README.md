@@ -1,4 +1,4 @@
-Collection of shell scripts that i made because i'm bored
+Collection of shell scripts that i made because i'm bored, with the goal to make a script that are POSIX compliant but also useful for me
 
 Scripts:
 
