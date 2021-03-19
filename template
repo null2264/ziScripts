@@ -1,0 +1,90 @@
+#!/bin/sh
+
+# -=- Simple Template Manager -=-
+# A simple script that copy template file to a specific location
+# Or create new template to be used later on
+# Template location: $HOME/.config/zi_template/templates
+
+# Usage example:
+#   - template -n newtemplate file.md
+#   - template -t newtemplate newfile.md
+
+# default values
+MODE="duplicate"
+TEMPLATE_NAME="default"
+TEMPLATE_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/zi_template/templates"
+
+# default file check
+[ ! -d $TEMPLATE_DIR ] && mkdir -p $TEMPLATE_DIR
+[ ! -e "$TEMPLATE_DIR/default" ] && touch "$TEMPLATE_DIR/default"
+
+create() {
+	# -- checks
+	# check if template already exist
+	# TODO: add overwrite prompt
+	[ -e $1 ] && echo "Template '$(basename $1)' already exist!" && exit 1
+
+	# check if "file" is exist and not a directory
+	if [ -d "$2" ]; then
+		echo "Template can't be directory!"
+		exit 1
+	else
+		[ ! -e "$2" ] && echo "There's no file called '$(basename "$2")'!" && exit 1
+	fi
+	# --
+	
+	# create the new template
+	cp "$2" "$TEMPLATE_DIR/$(basename $1)"
+	echo "Template '$(basename $1)' has been created."
+}
+
+duplicate() {
+	# -- checks
+	# check if template exist
+	[ ! -e $1 ] && echo "Template '$(basename $1)' not found!" && exit 1
+
+	# check if destination already occupied
+	if [ -d "$2" ]; then
+		echo "There's already a directory called '$(basename "$2")'!"
+		exit 1
+	else
+		[ -e "$2" ] && echo "There's already a file called '$(basename "$2")'!" && exit 1
+	fi
+	# --
+
+	# copy template to destination
+	cp $1 "$2"
+	echo "Template '$(basename $1)' has been duplicated as '$(basename "$2")'."
+}
+
+# Error stuff (and instruction on how to use this script)
+err()
+{
+	echo "Usage: template [OPTION...] [FILE]
+Options:
+  -h		show this message
+  -n		create new template instead of duplicate template
+  -t		use custom template (instead of 'default')" && exit 1;
+}
+
+# [START OF FLAG STUFF] ---
+
+# Get flags (options)
+while getopts "t:hn:" opt; do
+    case "${opt}" in
+	h) err ;;
+        n) MODE="create" \
+	   TEMPLATE_NAME=${OPTARG};;
+	t) TEMPLATE_NAME=${OPTARG};;
+        *) ;;
+    esac
+done
+
+shift $((OPTIND - 1))
+
+# [END OF FLAG STUFF] ---
+
+[ -z "$1" ] && err
+
+# [create|duplicate] [template file] [file name]
+$MODE "$TEMPLATE_DIR/$TEMPLATE_NAME" "$@"
