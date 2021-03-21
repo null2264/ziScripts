@@ -1,0 +1,53 @@
+#!/bin/sh
+
+# -=- Simple To Do List Manager -=-
+# Not very useful imo, but i'm bored so ehh...
+# TODO: Clean and improve this thing, look shit rn
+
+DATAFILE="${XDG_DATA_HOME:-$HOME/.local/share}/zi_todo"
+
+noTask() {
+	echo "You have no task."
+	exit
+}
+
+lineBreak() {
+	echo "$1" | sed 's/\\n/\n/g'
+}
+
+getTodo() {
+	[ -z "$TODO" ] && noTask
+	case "$1" in
+		[0-9]*) ID=$(echo $1 | sed -r 's/^0*([0-9])/\1/g')
+			[ -z "${SPECIFIC:=$(echo "$TODO" | grep "^\[$ID\]")}" ] && echo "There's no task with id '$ID'." && exit
+			lineBreak "$SPECIFIC" && exit;;
+		"") lineBreak "$TODO" && exit;;
+	esac
+}
+
+[ -e $DATAFILE ] && TODO=$(cat -b $DATAFILE | sed -r 's/^\s+([0-9]*)\s+/[\1] /g') || touch $DATAFILE
+
+case "$1" in
+	help) echo "Usage: todo [OPTION] [TASK|TASK ID]
+Options:
+  help		show this message
+  add		add new task
+  remove	remove a task
+  info		show info of a task
+  list		show your tasks";;
+	add)
+	  [ ! -z "$2" ] && echo "${@:2}" >> $DATAFILE && echo "Added task:"; echo "	${@:2}" && exit
+	  echo "Usage: todo add [TASK]"
+	  ;;
+	remove|rm)
+	  if [ ! -z $2 ]; then
+		  [ ! -z "${DATA:="$(getTodo)"}" ] && echo "$DATA" | grep -v "^\[$2\]" | sed "s/^\[[0-9]\] //g" > $DATAFILE && echo "Task has been removed"
+	  fi
+	  ;;
+	clear) : > $DATAFILE && echo "Todo list has been cleared";;
+	info) [ ! -z "$2" ] && getTodo "$2" || echo "Usage: todo info [TASK ID]";;
+	list|ls|*) getTodo;;
+esac
+
+# getTodo $1
+

@@ -4,3 +4,4 @@ Scripts:
 
 - `dropbox`: Simple dropbox uploader, also able to share file and print the url using `-s` flag.
 - `template`: Simple template manager, create a template or copy a template to a destination
+- `todo`: Simple todo list.
