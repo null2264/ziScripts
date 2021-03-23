@@ -41,7 +41,8 @@ Options:
 	  ;;
 	remove|rm)
 	  if [ ! -z $2 ]; then
-		  [ ! -z "${DATA:="$(getTodo)"}" ] && echo "$DATA" | grep -v "^\[$2\]" | sed "s/^\[[0-9]\] //g" > $DATAFILE && echo "Task has been removed"
+		  [ ! -z "$TODO" ] && echo "$TODO" | grep -v "^\[$2\]" | sed "s/^\[[0-9]\] //g" > $DATAFILE && echo "Task has been removed"
+		  # noTask
 	  fi
 	  ;;
 	clear) : > $DATAFILE && echo "Todo list has been cleared";;
