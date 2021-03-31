@@ -10,6 +10,8 @@
 #
 # TOKEN="INSERT YOUR DROPBOX TOKEN HERE"
 # DIRECTORY="dropboxApp"
+# TEMPLATE="Shared file: %s" -> Where %s is the shared link
+
 # # DIRECTORY -> "/Dropbox/Apps/<dropbox_app_name>/$DIRECTORY/"
 CONF_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/zi_dropbox"
 [ -e $CONF_FILE ] && . "$CONF_FILE" || exit 1
@@ -59,8 +61,9 @@ RESULT=$(curl -X POST https://content.dropboxapi.com/2/files/upload \
 
 # Share file then print the url
 [ ${SHARE:-0} -lt 1 ] && exit 0
-curl -X POST https://api.dropboxapi.com/2/sharing/create_shared_link_with_settings \
+SHARED=$(curl -X POST https://api.dropboxapi.com/2/sharing/create_shared_link_with_settings \
 	--silent \
 	--header "Authorization: Bearer $TOKEN" \
 	--header "Content-Type: application/json" \
-	--data "{\"path\": $(echo $RESULT | jq .path_display),\"settings\": {\"requested_visibility\": \"public\",\"audience\": \"public\",\"access\": \"viewer\"}}" | printf "Shared link: %s\n" $(jq -Mr .url)
+	--data "{\"path\": $(echo $RESULT | jq .path_display),\"settings\": {\"requested_visibility\": \"public\",\"audience\": \"public\",\"access\": \"viewer\"}}" | jq -Mr .url)
+printf "${TEMPLATE:-Shared link: %s}\n" $SHARED
