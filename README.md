@@ -2,6 +2,10 @@
 
 Collection of scripts that I personally used.
 
+## Requirements
+- `jq`
+- `jo`
+
 ## Scripts
 
 - `dropbox`: Simple dropbox uploader, also able to share file and print the url using `-s` flag.
