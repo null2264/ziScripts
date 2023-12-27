@@ -15,5 +15,6 @@ Collection of scripts that I personally used.
 
 ### `eww` Scripts
 
+- `eww-datetime-listener`
 - `eww-hyprland-active-workspace-listener`
 - `eww-hyprland-workspace-list-listener`
