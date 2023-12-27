@@ -8,3 +8,8 @@ Collection of scripts that I personally used.
 - `post-python-upgrade`: Python script that install packages installed on old python install to newer one.
 - `template`: Simple template manager, create a template or copy a template to a destination.
 - `todo`: Simple todo list.
+
+### `eww` Scripts
+
+- `eww-hyprland-active-workspace-listener`
+- `eww-hyprland-workspace-list-listener`
