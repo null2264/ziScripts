@@ -18,3 +18,4 @@ Collection of scripts that I personally used.
 - `eww-datetime-listener`
 - `eww-hyprland-active-workspace-listener`
 - `eww-hyprland-workspace-list-listener`
+- `eww-launch`: Launch eww, seems to fix odd behaviour when eww being launch by Hyprland's exec-once
