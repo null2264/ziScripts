@@ -1,0 +1,8 @@
+#!/bin/zsh
+
+install_pkgs() {
+	doas pacman -S jo \
+		bc \
+		socat \
+		jq
+}
