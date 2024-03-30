@@ -1,0 +1,7 @@
+#!/bin/zsh
+
+echo $ZSH_PLUGINS
+
+[ $ZSH_PLUGINS = "" ] && exit 1
+
+cd $ZSH_PLUGINS && git clone $1
