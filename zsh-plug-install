@@ -1,7 +1,12 @@
 #!/bin/zsh
 
-echo $ZSH_PLUGINS
+err()
+{
+	>&2 echo "Usage: zsh-plug-install [GIT REPO URL]" && exit 1;
+}
 
-[ $ZSH_PLUGINS = "" ] && exit 1
+[ "x$1" = "x" ] && err
+
+[ "x$ZSH_PLUGINS" = "x" ] && >&2 echo "The environment variable ZSH_PLUGINS is not set!" && exit 1
 
 cd $ZSH_PLUGINS && git clone $1
