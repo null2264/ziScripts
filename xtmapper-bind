@@ -1,0 +1,1 @@
+xtmapper-client | doas waydroid shell -- sh /sdcard/Android/data/xtr.keymapper/files/xtMapper.sh --wayland-client
