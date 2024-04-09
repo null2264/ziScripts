@@ -9,4 +9,5 @@ bind() {
 
 [ $status = "STOPPED" ] && echo "Please run 'waydroid session start' first!" && exit 1
 
+swww kill 2>/dev/null
 waydroid show-full-ui && bind
