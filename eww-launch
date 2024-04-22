@@ -1,4 +1,5 @@
 #!/bin/sh
+pkill eww  # making sure eww actually gone
 sleep 5
 eww daemon --restart
 eww open bar
