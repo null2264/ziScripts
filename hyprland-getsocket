@@ -1,6 +1,6 @@
 #!/bin/sh
 
 SOCKET=/tmp/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock
-cat $SOCKET 2>/dev/null || SOCKET=$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock
+ls $SOCKET 2>/dev/null && exit 0 || SOCKET=$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock
 
 echo $SOCKET
