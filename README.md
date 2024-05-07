@@ -36,9 +36,7 @@ Collection of scripts that I personally used.
 
 ### Gaming with WayDroid
 
-> [!CAUTION]
-> This scripts uses binary file, compile it yourself if you don't trust it.
->
+> [!WARNING]
 > Requires `waydroid` and [`xtmapper-client` (`wayland-getevent`)](https://github.com/null2264/wayland-getevent)!
 >
 > You can install `xtmapper-client` (`wayland-getevent`) using my [custom PKGBUILD](https://github.com/null2264/pkgbuilds/tree/485e81a751e97608f74a8913f7853559b53d4cc0/xtmapper-client-git).
