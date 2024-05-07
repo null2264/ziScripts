@@ -39,9 +39,10 @@ Collection of scripts that I personally used.
 > [!CAUTION]
 > This scripts uses binary file, compile it yourself if you don't trust it.
 >
-> Requires `waydroid`!
+> Requires `waydroid` and [`xtmapper-client` (`wayland-getevent`)](https://github.com/null2264/wayland-getevent)!
+>
+> You can install `xtmapper-client` (`wayland-getevent`) using my [custom PKGBUILD](https://github.com/null2264/pkgbuilds/tree/485e81a751e97608f74a8913f7853559b53d4cc0/xtmapper-client-git).
 
 - `xtmapper-launch`: [WIP] Automatically launch Waydroid and bind XtMapper to Waydroid.
   - `xtmapper-bind`: Bind XtMapper to Waydroid.
-  - `bin/xtmapper-client`: Not a script, it's a [fork](https://github.com/null2264/wayland-getevent) of [wayland-getevent](https://github.com/Xtr126/wayland-getevent) to hardcode its window size because resizing it doesn't work on hyprland for me.
 - `xqtscrcpy`: Force qtscrcpy to use XWayland.
