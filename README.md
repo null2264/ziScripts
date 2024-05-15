@@ -14,15 +14,6 @@ Collection of scripts that I personally used.
 - `bootstrap`: [WIP] Automatically rice your Arch Linux
 - `post-python-upgrade`: Python script that install packages installed on old python install to newer one.
 - `zsh-plug-install`: Basically just git clone alias for zsh plugins
-
-### `eww` scripts
-
-> [!WARNING]
-> Requires `bc`, `jq`, `jo`, and `socat`!
-
-- `eww-datetime-listener`
-- `eww-hyprland-active-workspace-listener`
-- `eww-hyprland-workspace-list-listener`
 - `eww-launch`: Launch eww, seems to fix odd behaviour when eww being launch by Hyprland's exec-once
 
 ### Productivity QoL scripts
