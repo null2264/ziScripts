@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/zsh
 
 status=$(waydroid status | grep Session | sed -n 's/^Session:\t//p')
 
@@ -7,7 +7,7 @@ bind() {
 	xtmapper-bind
 }
 
-[ $status = "STOPPED" ] && echo "Please run 'waydroid session start' first!" && exit 1
+[ $status = "STOPPED" ] && { echo "Please run 'waydroid session start' first!"; exit 1; }
 
-swww kill 2>/dev/null
-waydroid show-full-ui && bind
+swww kill 2>/dev/null && \
+gamemoderun waydroid show-full-ui && bind
