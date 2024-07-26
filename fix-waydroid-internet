@@ -1,0 +1,17 @@
+#!/bin/sh
+
+prompt() {
+	printf "$1"
+	read INPUT
+	case $INPUT in
+		[yY] ) return 0 ;;
+		* ) return 1 ;;
+	esac;
+}
+
+prompt "Make sure you have IPv6 enabled before proceeding. Continue anyway? [y/N] " || exit 1;
+
+in=waydroid0
+out=enp2s0
+iptables -I FORWARD 1 --in-interface $out --out-interface $in -j ACCEPT
+iptables -I FORWARD 2 --in-interface $in --out-interface $out -j ACCEPT
