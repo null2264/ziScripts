@@ -1,3 +1,3 @@
 #!/bin/sh
 sleep 5
-eww daemon --restart && eww open bar
+eww open bar --restart
