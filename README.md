@@ -24,6 +24,7 @@ Collection of scripts that I personally used.
 - `dropbox`: Simple dropbox uploader, also able to share file and print the url using `-s` flag.
 - `template`: Simple template manager, create a template or copy a template to a destination.
 - `todo`: Simple todo list.
+- `android-clipboard`: Manange your Android device's clipboard via ADB (and [Clipper](https://github.com/majido/clipper))
 
 ### Gaming with WayDroid
 

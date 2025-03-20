@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Requires Clipper (https://github.com/majido/clipper)
+
+case "$1" in
+	"get")
+		adb shell am start ca.zgrs.clipper/.Main
+		sleep 1
+		adb shell am broadcast -a clipper.get
+		;;
+	"set")
+		shift
+		[ "$1" = "" ] && exit 1
+		adb shell am start ca.zgrs.clipper/.Main
+		sleep 1
+		adb shell am broadcast -a clipper.set -e text "$@"
+		;;
+	*)
+		echo "usage: android-clipboard [get | set <text>]" >&2
+		exit 1
+		;;
+esac
+adb shell am force-stop ca.zgrs.clipper
