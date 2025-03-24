@@ -13,7 +13,7 @@ case "$1" in
 		[ "$1" = "" ] && exit 1
 		adb shell am start ca.zgrs.clipper/.Main
 		sleep 1
-		adb shell am broadcast -a clipper.set -e text "$@"
+		adb shell am broadcast -a clipper.set -e text "'$@'"
 		;;
 	*)
 		echo "usage: android-clipboard [get | set <text>]" >&2
