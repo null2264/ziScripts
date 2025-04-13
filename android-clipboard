@@ -2,6 +2,11 @@
 
 # Requires Clipper (https://github.com/majido/clipper)
 
+adb shell echo "" 2>/dev/null || {
+	echo "Run \`adb connect\` first before running this script" >&2
+	exit 1
+}
+
 case "$1" in
 	"get")
 		adb shell am start ca.zgrs.clipper/.Main
