@@ -1,0 +1,23 @@
+#!/bin/sh
+
+[ $ZI_DOTFILES ] || {
+	echo "null2264's dotfiles is not installed properly, you need to run the './pre-bootstrap' and './bootstrap' from https://github.com/null2264/dotfiles to use this script" >&2
+	exit 1
+}
+
+. $ZI_DOTFILES/common
+
+original="$(echo $1 | sed "s|^./||")"
+
+[ -f "$original" -o -d "$original" ] || {
+	echo "File not found!"
+	exit 1
+}
+
+location="$ZI_DOTFILES/$(echo $PWD | sed "s|^$HOME/||")"
+
+prompt "Move $1 to dotfiles ($location)? [y/N] " && {
+	mkdir -p $location/ && \
+	mv $(realpath $original) $location/ && \
+	ln -sf $location/$original $PWD
+}
