@@ -1,0 +1,10 @@
+#!/bin/sh
+
+tries=1
+while [ $tries -le 5 ];
+do
+	sudo darwin-rebuild switch --flake $ZI_NIX_FLAKE && exit 0
+	tries=$((tries+1))
+done
+
+[ "$?" = "0" ] || echo "Failed"
