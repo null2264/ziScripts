@@ -1,0 +1,28 @@
+#!/bin/sh
+
+#########################################################
+# fart is a (proof-of-concept) dart wrapper that "inject" my own tooling to it.
+#
+# Why? Because: https://github.com/dart-lang/dart_style/issues/1695 and https://github.com/dart-lang/dart_style/issues/534
+# Not only do they refuses to make it much more configurable but they also refuses to let us use our own formatter.
+#
+# Why fart? cuz the fact they even refuses to let us use custom formatter stinks like a fart.
+#########################################################
+
+DART_EXEC="/usr/bin/dart"
+FORMATTER_EXEC=""
+
+case "$1" in
+	"format")
+		[ "$FORMATTER_EXEC" = "" ] && {
+			echo "FORMATTER_EXEC is not set"
+			exit 1
+		}
+		shift
+		$FORMATTER_EXEC $@
+		;;
+	*)
+		$DART_EXEC $@
+		;;
+esac
+
