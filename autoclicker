@@ -3,8 +3,7 @@
 # REF: https://github.com/Michaelpalacce/.dotfiles/blob/6891bfca0f746e8d6aacf368830f4d0d13fe9398/bin/.local/bin/autoclicker
 
 ########################
-# I missed the auto clicker of my razer, so this is an attempt to create one manually
-# Dependencies: ydotool, libinput, `sudo usermod -aG input $USER`
+# Dependencies: ydotool, libinput, libinput-tools
 ########################
 
 YDOTOOL_BUTTON_LEFT=0xc0
@@ -12,7 +11,7 @@ YDOTOOL_BUTTON_LEFT=0xc0
 AUTOCLICKER_ACTIVE=false
 LAST_LEFT_PRESS_TIME=0
 LAST_RIGHT_PRESS_TIME=0
-TOGGLE_THRESHOLD_MS=200
+TOGGLE_THRESHOLD_MS=210
 
 # Start ydotoold
 sudo ydotoold &
