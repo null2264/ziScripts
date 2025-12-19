@@ -11,6 +11,7 @@ YDOTOOL_BUTTON_LEFT=0xc0
 AUTOCLICKER_ACTIVE=false
 LAST_LEFT_PRESS_TIME=0
 LAST_RIGHT_PRESS_TIME=0
+DELAY=0.2s
 TOGGLE_THRESHOLD_MS=210
 
 # Start ydotoold
@@ -33,7 +34,7 @@ start_autoclicker() {
     # Background BABY
     (
         while $AUTOCLICKER_ACTIVE; do
-            sudo ydotool click $YDOTOOL_BUTTON_LEFT >>/dev/null
+            sleep $DELAY && sudo ydotool click $YDOTOOL_BUTTON_LEFT >>/dev/null
         done
     ) &
     AUTOCLICKER_PID=$! 
