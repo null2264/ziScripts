@@ -14,10 +14,10 @@ original="$(echo $1 | sed "s|^./||")"
 	exit 1
 }
 
-location="$ZI_DOTFILES/$(echo $PWD | sed "s|^$HOME/||")"
+location="$ZI_DOTFILES/$(echo $original | sed "s|^$HOME/||")"
 
 prompt "Move $1 to dotfiles ($location)? [y/N] " && {
-	mkdir -p $location/ && \
-	mv $(realpath $original) $location/ && \
-	ln -sf $location/$original $PWD
+	mkdir -p $(dirname $location) && \
+	mv $(realpath $original) $location && \
+	ln -sf $location $original
 }
